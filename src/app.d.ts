@@ -5,7 +5,14 @@ declare global {
 		// interface Error {}
 		// interface Locals {}
 		// interface PageData {}
-		// interface PageState {}
+		interface PageState {
+			done?: boolean;
+			loading?: boolean;
+			result?: ActionResult<
+				Record<string, unknown> | undefined,
+				Record<string, unknown> | undefined
+			>;
+		}
 		// interface Platform {}
 	}
 }

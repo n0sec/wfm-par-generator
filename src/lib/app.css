@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* BEGIN: Set default text sizes for h1, h2 and h3 elements */
+h1 {
+	@apply text-4xl font-bold;
+}
+
+h1:first-child {
+	@apply mb-4;
+}
+
+section > h2:first-child {
+	@apply mt-4 mb-4;
+}
+
+/* h3 + p {
+	@apply mt-4 mb-4;
+} */
+
+h2 {
+	@apply text-3xl font-bold mb-2;
+}
+
+h2 + p {
+	@apply mt-4;
+}
+
+h3 {
+	@apply text-2xl font-bold;
+}
+
+.form-control + h3 {
+	@apply mt-6 mb-4;
+}
+/* END: Set default text sizes for h1, h2 and h3 elements */
+
+/* Links */
+a {
+	@apply link link-primary link-hover;
+}
+/* END: Links */
+
+/* BEGIN: List styles */
+p + ul,
+p + ol {
+	@apply mt-4 mb-4;
+}
+ol {
+	@apply list-decimal list-inside leading-[1.75rem];
+}
+
+ul {
+	@apply list-disc list-inside leading-[1.75rem];
+}
+
+ol > li,
+ul > li {
+	@apply ml-4;
+}
+/* END: List styles */
+
+/* BEGIN: Alert styles */
+.alert {
+	@apply mt-4 mb-4 rounded-md;
+}
+/* END: Alert styles */
+
+section {
+	@apply mt-8 mb-8;
+}
+
+.label-text {
+	@apply font-bold;
+}
+
+input {
+	@apply rounded-md input-primary !important;
+}
+
+select {
+	@apply rounded-md select-primary !important;
+}
+
+textarea {
+	@apply rounded-md textarea-primary !important;
+}
+
+.form-control + .form-control {
+	@apply mt-4;
+}
+
+p + .form-control {
+	@apply mt-4;
+}
