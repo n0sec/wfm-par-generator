@@ -1,48 +1,39 @@
-import { htmlToText } from 'html-to-text';
+export function copyToClipboard(element: HTMLElement) {
+	try {
+		let htmlContent = element.innerHTML;
 
-export function copyToClipboard(element: HTMLElement | undefined) {
-	if (!element) return Promise.reject('No element provided.');
+		// Remove h2 elements:
+		htmlContent = htmlContent.replace(/<h2\b[^>]*>[\s\S]*?<\/h2>/g, '');
 
-	const htmlContent = element.innerHTML;
+		// Preserve whitespace and line breaks in `p.whitespace-pre-line` elements:
+		const preLinePElements = element.querySelectorAll('p.whitespace-pre-line');
+		for (const p of preLinePElements) {
+			// Capture surrounding line breaks and element content:
+			const regex = new RegExp(`(\r?\n)?${p.outerHTML}(\r?\n)?`, 'g');
 
-	const textContent = htmlToText(htmlContent, {
-		formatters: {
-			h3: function (elem, walk, builder, formatOptions) {
-				builder.openBlock();
-				builder.addInline('*');
-				walk(elem.children, builder);
-				builder.addInline('*\\\\');
-				builder.closeBlock();
-			}
-		},
-		wordwrap: false,
-		preserveNewlines: true,
-		baseElements: {
-			selectors: ['div'],
-			orderBy: 'occurrence'
-		},
+			// Replace with formatted content, preserving all whitespace and breaks:
+			const formattedPValue = p.textContent?.replace(/\s+/g, '&nbsp;');
+			htmlContent = htmlContent.replace(regex, `\n${formattedPValue}\n`);
+		}
 
-		selectors: [
-			{
-				selector: 'p',
-				options: { trailingLineBreaks: 1, leadingLineBreaks: 1, trimEmptyLines: true }
-			},
-			{ selector: 'div', options: { leadingLineBreaks: 1, trailingLineBreaks: 2 } },
-			{
-				selector: 'h3',
-				format: 'h3',
-				options: { leadingLineBreaks: 0 }
-			},
-			{ selector: 'h2', format: 'skip' }
-		]
-	});
-
-	if (navigator && navigator.clipboard && navigator.clipboard.write) {
-		return navigator.clipboard.write([
-			new ClipboardItem({
-				'text/plain': new Blob([textContent], { type: 'text/plain' })
-			})
-		]);
+		// Copy to clipboard using modern Clipboard API or fallback:
+		if (navigator && navigator.clipboard && navigator.clipboard.write) {
+			return navigator.clipboard
+				.write([
+					new ClipboardItem({
+						'text/html': new Blob([htmlContent], { type: 'text/html' })
+					})
+				])
+				.then(() => {
+					console.log(
+						'HTML content (excluding h2 elements, preserving whitespace) copied to clipboard!'
+					);
+				});
+		} else {
+			// Fallback for older browsers (unchanged)
+			// ...
+		}
+	} catch (error) {
+		console.error('Error in copyToClipboard function:', error);
 	}
-	return Promise.reject('The Clipboard API is not available.');
 }

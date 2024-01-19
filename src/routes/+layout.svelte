@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>PRO WFM PAR Generator</title></svelte:head
+	<title>Pre-PAR Generator: Custom Reports</title></svelte:head
 >
 
 <main>
