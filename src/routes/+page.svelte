@@ -385,7 +385,7 @@
 
 {#if $page.state.done}
 	<article>
-		<h1 class="text-center">Pro WFM PAR Template</h1>
+		<h1 class="text-center">Custom Reporting PAR Template</h1>
 		<div class="divider"></div>
 
 		<section id="instructions">
@@ -395,12 +395,21 @@
 				buttons on the right side of each section to copy that section to the clipboard for easier
 				pasting into the JIRA Form.
 			</p>
+			{#if form?.projectFilesAttached}
+				<Alert
+					type="error"
+					message="Do not forget to attach the BIRT project files to the JIRA PAR form."
+				/>
+			{/if}
 		</section>
 
 		<!-- Issue Summary -->
 		<section id="issue-summary" bind:this={issueSummarySection}>
-			<h3>Issue Summary</h3>
-			<div class="relative">
+			<div class="content-hero bg-accent text-primary-content text-center p-4">
+				<h2>Issue Summary</h2>
+			</div>
+
+			<div class="relative mt-4">
 				<CopyToCliboard elementToCopy={issueSummarySection} />
 				<p>{form?.issueSummary}</p>
 			</div>
@@ -416,27 +425,27 @@
 				<CopyToCliboard elementToCopy={jiraDescriptionSection} />
 
 				<!-- Problem -->
-				<h4>Problem</h4>
+				<h3>Problem</h3>
 				<p class="mt-4">{form?.problem}</p>
 
 				<!-- Expected Result -->
-				<h4>Expected Result</h4>
+				<h3>Expected Result</h3>
 				<p class="mt-4">{form?.expectedResult}</p>
 
 				<!-- Additional Information -->
-				<h4>Additional Information</h4>
+				<h3>Additional Information</h3>
 				<p class="mt-4 whitespace-pre-line">{form?.additionalInformation}</p>
 
 				<!-- Troubleshooting Performed -->
-				<h4>Troubleshooting Performed</h4>
+				<h3>Troubleshooting Performed</h3>
 				<p class="mt-4 whitespace-pre-line">{form?.troubleshootingPerformed}</p>
 
 				<!-- Suspected Problem Origin -->
-				<h4>Suspected Problem Origin</h4>
+				<h3>Suspected Problem Origin</h3>
 				<p class="mt-4">{form?.issueDetails}</p>
 
 				<!-- Tenant Information -->
-				<h4>Tenant Information</h4>
+				<h3>Tenant Information</h3>
 				<p>
 					<strong>Tenant URL:</strong>
 					{form?.url}
@@ -447,7 +456,7 @@
 				</p>
 
 				<!-- Report Information -->
-				<h4>Report Information</h4>
+				<h3>Report Information</h3>
 				<p>
 					<strong>Report Name:</strong>
 					{form?.reportName}
