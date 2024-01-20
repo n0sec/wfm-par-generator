@@ -410,7 +410,6 @@
 			</div>
 
 			<div class="relative mt-4">
-				<CopyToCliboard elementToCopy={issueSummarySection} />
 				<p>{form?.issueSummary}</p>
 			</div>
 		</section>
